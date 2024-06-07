@@ -1,21 +1,13 @@
-import pogo from 'https://deno.land/x/pogo/main.ts';
+/// <reference no-default-lib="true" />
+/// <reference lib="dom" />
+/// <reference lib="dom.iterable" />
+/// <reference lib="dom.asynciterable" />
+/// <reference lib="deno.ns" />
 
-const server = pogo.server({ port : 3000 });
-server.router.get('/', (request, h) => {
-    return h.file('index.html');
-});
-server.router.get('/character', (request, h) => {
-    return h.file('html/character.html');
-});
-server.router.get('/about', () => {
-    return 'about!';
-});
-server.router.get('/contact', () => {
-    return 'contact!';
-});
-server.router.get('/assets/{file*}', (request, h) => {
-    return h.directory('assets');
-});
+import "$std/dotenv/load.ts";
 
+import { start } from "$fresh/server.ts";
+import manifest from "./fresh.gen.ts";
+import config from "./fresh.config.ts";
 
-server.start();
+await start(manifest, config);
